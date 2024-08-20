@@ -18,9 +18,9 @@ function crearUser(){
     console.log("creando usuario... ");
     // Petición HTTP
     try{   
-        respuesta = fetch('api/usuarios', {
+        respuesta = fetch('api/usuarios', {  // REEMPLAZAR ACA POR LA RUTA CORRESPONDIENTE
             
-            method: 'POST', //metodo HTTP
+            method: 'POST', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTE
             headers: {   //aca decimos que devuelve un JSON
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -44,4 +44,34 @@ function crearUser(){
         console.log("Error en registro: " + error);
     }
 
+}
+
+
+function eliminarUser(){
+    idUsuario = document.querySelector("#idUser");
+
+    if (confirm("¿Desea eliminar el usuario")){
+
+        console.log("eliminando usuario "+idUsuario.value);
+        try{
+            
+            respuesta = fetch('api/usuarios/del/' + idUsuario.value, { // REEMPLAZAR ACA POR LA RUTA CORRESPONDIENTE
+                method: 'DELETE', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTE
+                headers: {   
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log("Respuesta HTTP: " + respuesta.status);
+        }
+        catch (error){
+            //hubo un error
+            console.log("Error en borrado: " + error);
+        }
+
+        console.log("Usuario eliminado");
+        
+    }
+    
+    
 }
