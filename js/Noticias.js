@@ -1,4 +1,4 @@
-async function cargar_noticias(){
+async function listar_noticias(){
 
 
     const respuesta = await fetch("http://localhost:3000/noticias/listar"
@@ -39,4 +39,53 @@ async function cargar_noticias(){
 }
 
 
-cargar_noticias();
+
+async function  crearNoticia(){
+
+    inputAutor = document.querySelector("#autor");
+    inputTitulo = document.querySelector("#titulo");
+    inputTexto = document.querySelector("#texto");
+
+    let datos = {};
+    let codigoResp;
+
+  
+
+    // Armamos el JSON con los datos del registro
+    datos.autor = inputAutor.value;
+    //datos.last_name = inputLastName.value;
+    datos.titulo = inputTitulo.value;
+    datos.texto = inputTexto.value;
+    
+    console.log(JSON.stringify(datos));
+    console.log("creando usuario... ");
+    // Petición HTTP
+    try{   
+        respuesta = fetch('http://localhost:3000/noticias/crear', {  // REEMPLAZAR ACA POR LA RUTA CORRESPONDIENTE
+            
+            method: 'POST', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTE
+            headers: {   //aca decimos que devuelve un JSON
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datos)     //Acá van los datos del registro    
+        })
+        .then(response => {
+            codigoResp = response.status;
+            console.log("Respuesta de petición: "+response.status);
+
+            //recargamos la pagina
+            if(codigoResp >= 200 && codigoResp < 300){
+            alert("Usuario registrado correctamente");
+            console.log("Recargando pagina...")
+            location.reload();
+            }
+        });
+    }
+    catch (error){
+        //hubo un error
+        console.log("Error en registro: " + error);
+    }
+
+}
+
