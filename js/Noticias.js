@@ -39,12 +39,76 @@ async function listar_noticias(){
 }
 
 
+async function buscarNoticiaPorID(){
+    inputIDNoticia = document.querySelector("#idNoticia");
+    inputAutor = document.querySelector("#autorNoticia");
+    inputTitulo = document.querySelector("#tituloNoticia");
+    inputTexto = document.querySelector("#textoNoticia");
+    
+    const respuesta = await fetch("http://localhost:3000/noticias/porID/" + inputIDNoticia.value
+        , {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.    
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+            }
+        });
+
+    datos = await respuesta.json(); 
+
+
+    console.log(datos);
+
+    
+
+    datos.forEach(noti => {
+
+        inputIDNoticia.value= noti._id;
+        inputAutor.value = noti.autor;
+        inputTitulo.value = noti.titulo;
+        inputTexto.value = noti.texto;
+    });
+}
+
+
+async function buscarNoticiaPorTitulo(){
+    inputIDNoticia = document.querySelector("#idNoticia");
+    inputAutor = document.querySelector("#autorNoticia");
+    inputTitulo = document.querySelector("#tituloNoticia");
+    inputTexto = document.querySelector("#textoNoticia");
+    
+    const respuesta = await fetch("http://localhost:3000/noticias/porTitulo/" + inputTitulo.value
+        , {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.    
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+            }
+        });
+
+    datos = await respuesta.json(); 
+
+
+    console.log(datos);
+
+    
+
+    datos.forEach(noti => {
+
+        inputIDNoticia.value= noti._id;
+        inputAutor.value = noti.autor;
+        inputTitulo.value = noti.titulo;
+        inputTexto.value = noti.texto;
+    });
+}
+
+
 
 async function  crearNoticia(){
 
-    inputAutor = document.querySelector("#autor");
-    inputTitulo = document.querySelector("#titulo");
-    inputTexto = document.querySelector("#texto");
+    inputAutor = document.querySelector("#autorNoticia");
+    inputTitulo = document.querySelector("#tituloNoticia");
+    inputTexto = document.querySelector("#textoNoticia");
 
     let datos = {};
     let codigoResp;
@@ -89,3 +153,120 @@ async function  crearNoticia(){
 
 }
 
+
+async function  modificarNoticia(){
+
+    inputIDNoticia = document.querySelector("#idNoticia");
+    inputAutor = document.querySelector("#autorNoticia");
+    inputTitulo = document.querySelector("#tituloNoticia");
+    inputTexto = document.querySelector("#textoNoticia");
+    
+    if(inputIDNoticia.value && inputAutor && inputTitulo && inputTexto){
+
+        let datos = {};
+        let codigoResp;
+
+    
+
+        // Armamos el JSON con los datos del registro
+        datos.autor = inputAutor.value;
+        //datos.last_name = inputLastName.value;
+        datos.titulo = inputTitulo.value;
+        datos.texto = inputTexto.value;
+        
+        console.log(JSON.stringify(datos));
+        console.log("ACtualizando noticia... ");
+        // Petición HTTP
+        try{   
+            respuesta = fetch('http://localhost:3000/noticias/actualizar/' + inputIDNoticia.value
+            , {  // REEMPLAZAR ACA POR LA RUTA CORRESPONDIENTE
+                
+                method: 'PUT', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTe
+                headers: {   //aca decimos que devuelve un JSON
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datos)     //Acá van los datos del registro    
+            })
+            .then(response => {
+                codigoResp = response.status;
+                console.log("Respuesta de petición: "+response.status);
+
+                //recargamos la pagina
+                if(codigoResp >= 200 && codigoResp < 300){
+                alert("Noticia actualizada correctamente");
+                console.log("Recargando pagina...")
+                location.reload();
+                }
+            });
+        }
+        catch (error){
+            //hubo un error
+            console.log("Error: " + error);
+        }
+
+    }
+    else{
+        alert("Buscar primero una noticia");
+    }
+
+}
+
+
+async function  eliminarNoticia(){
+
+    inputIDNoticia = document.querySelector("#idNoticia");
+    inputAutor = document.querySelector("#autorNoticia");
+    inputTitulo = document.querySelector("#tituloNoticia");
+    inputTexto = document.querySelector("#textoNoticia");
+    
+    if(inputIDNoticia.value){
+
+        let datos = {};
+        let codigoResp;
+
+    
+
+        // Armamos el JSON con los datos del registro
+        datos.autor = inputAutor.value;
+        //datos.last_name = inputLastName.value;
+        datos.titulo = inputTitulo.value;
+        datos.texto = inputTexto.value;
+        
+        console.log(JSON.stringify(datos));
+        console.log("Eliminando noticia... ");
+        // Petición HTTP
+        try{   
+            respuesta = fetch('http://localhost:3000/noticias/eliminar/' + inputIDNoticia.value
+            , {  // REEMPLAZAR ACA POR LA RUTA CORRESPONDIENTE
+                
+                method: 'DELETE', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTe
+                headers: {   //aca decimos que devuelve un JSON
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datos)     //Acá van los datos del registro    
+            })
+            .then(response => {
+                codigoResp = response.status;
+                console.log("Respuesta de petición: "+response.status);
+
+                //recargamos la pagina
+                if(codigoResp >= 200 && codigoResp < 300){
+                alert("Noticia eliminada correctamente");
+                console.log("Recargando pagina...")
+                location.reload();
+                }
+            });
+        }
+        catch (error){
+            //hubo un error
+            console.log("Error: " + error);
+        }
+
+    }
+    else{
+        alert("Especificar un ID");
+    }
+
+}
