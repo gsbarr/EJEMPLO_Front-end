@@ -44,7 +44,8 @@ async function buscarNoticiaPorID(){
     inputAutor = document.querySelector("#autorNoticia");
     inputTitulo = document.querySelector("#tituloNoticia");
     inputTexto = document.querySelector("#textoNoticia");
-    
+    console.log("ENTRA FETCH");
+
     const respuesta = await fetch("http://localhost:3000/noticias/porID/" + inputIDNoticia.value
         , {
             method: "GET", // *GET, POST, PUT, DELETE, etc.    
@@ -57,17 +58,19 @@ async function buscarNoticiaPorID(){
     datos = await respuesta.json(); 
 
 
-    console.log(datos);
-
+    console.log(respuesta.status);
     
-
-    datos.forEach(noti => {
-
-        inputIDNoticia.value= noti._id;
-        inputAutor.value = noti.autor;
-        inputTitulo.value = noti.titulo;
-        inputTexto.value = noti.texto;
-    });
+    if(respuesta.status != "404")
+    {
+        console.log("CON DATOS");
+        inputIDNoticia.value= datos._id;
+        inputAutor.value = datos.autor;
+        inputTitulo.value = datos.titulo;
+        inputTexto.value = datos.texto;
+    } else{
+        console.log("SIN DATOS");
+        alert("Datos no encontrados");
+    }
 }
 
 
@@ -91,15 +94,21 @@ async function buscarNoticiaPorTitulo(){
 
     console.log(datos);
 
+    if (datos.length > 0){
+        console.log("Con datos");
+        datos.forEach(noti => {
+            inputIDNoticia.value= noti._id;
+            inputAutor.value = noti.autor;
+            inputTitulo.value = noti.titulo;
+            inputTexto.value = noti.texto;
+        });
+    }
+    else{
+        console.log("SIN DATOS");
+        alert("Datos no encontrados");
+    }
     
-
-    datos.forEach(noti => {
-
-        inputIDNoticia.value= noti._id;
-        inputAutor.value = noti.autor;
-        inputTitulo.value = noti.titulo;
-        inputTexto.value = noti.texto;
-    });
+    
 }
 
 
@@ -114,12 +123,6 @@ async function  crearNoticia(){
     let codigoResp;
 
   
-
-    // Armamos el JSON con los datos del registro
-    datos.autor = inputAutor.value;
-    //datos.last_name = inputLastName.value;
-    datos.titulo = inputTitulo.value;
-    datos.texto = inputTexto.value;
     
     console.log(JSON.stringify(datos));
     console.log("creando usuario... ");
@@ -129,10 +132,15 @@ async function  crearNoticia(){
             
             method: 'POST', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTE
             headers: {   //aca decimos que devuelve un JSON
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Accept': '*/*',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify(datos)     //Acá van los datos del registro    
+            mode: "no-cors",
+            body: new URLSearchParams({    // ACA VAN LOS DATOS
+                'autor': inputAutor.value,
+                'titulo': inputTitulo.value,
+                'texto': inputTexto.value
+              })   
         })
         .then(response => {
             codigoResp = response.status;
@@ -163,18 +171,12 @@ async function  modificarNoticia(){
     
     if(inputIDNoticia.value && inputAutor && inputTitulo && inputTexto){
 
-        let datos = {};
+
         let codigoResp;
+        console.log("ID: "+ inputIDNoticia.value +" / Autor: "+ inputAutor.value + " / titulo: "+ inputTitulo.value + " / Texto: "+inputTexto.value);
 
-    
-
-        // Armamos el JSON con los datos del registro
-        datos.autor = inputAutor.value;
-        //datos.last_name = inputLastName.value;
-        datos.titulo = inputTitulo.value;
-        datos.texto = inputTexto.value;
         
-        console.log(JSON.stringify(datos));
+        
         console.log("ACtualizando noticia... ");
         // Petición HTTP
         try{   
@@ -183,10 +185,14 @@ async function  modificarNoticia(){
                 
                 method: 'PUT', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTe
                 headers: {   //aca decimos que devuelve un JSON
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+                    'Accept': '*/*',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(datos)     //Acá van los datos del registro    
+                body: new URLSearchParams({    // ACA VAN LOS DATOS
+                    'autor': inputAutor.value,
+                    'titulo': inputTitulo.value,
+                    'texto': inputTexto.value
+                  })   
             })
             .then(response => {
                 codigoResp = response.status;
@@ -255,6 +261,12 @@ async function  eliminarNoticia(){
                 if(codigoResp >= 200 && codigoResp < 300){
                 alert("Noticia eliminada correctamente");
                 console.log("Recargando pagina...")
+
+                inputIDNoticia.value = "";
+                inputAutor.value = "";
+                inputTitulo.value = "";
+                inputTexto.value = "";
+
                 location.reload();
                 }
             });

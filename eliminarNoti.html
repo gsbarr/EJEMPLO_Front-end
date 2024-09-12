@@ -11,7 +11,9 @@
 <body>
     
 <div class="container">
-    <h1>Eliminación de noticias</h1>
+    <h1>Eliminación de noticias 
+      <div class="right"><a class="waves-effect waves-light btn-large" href="index.html"><i class="material-icons left">arrow_back</i>Volver</a></div>
+    </h1>
     <h4>Consultar por ID o por titulo</h4>
 
     <div class="row">
@@ -27,7 +29,7 @@
           </div>
             <div class="row">
                 <div class="input-field col s12">
-                  <input placeholder="Autor" id="autorNoticia" type="text" class="validate">
+                  <input placeholder="Autor" id="autorNoticia" disabled type="text" class="validate">
                   <label for="autor">Autor</label>
                 </div>
               </div>
@@ -42,7 +44,7 @@
           </div>
           <div class="row">
             <div class="input-field col s12">
-                <textarea id="textoNoticia" class="materialize-textarea"></textarea>
+                <textarea id="textoNoticia"  disabled class="materialize-textarea"></textarea>
                 <label for="texto">Texto</label>
               </div>
           </div>
