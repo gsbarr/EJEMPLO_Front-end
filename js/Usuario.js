@@ -82,8 +82,8 @@ async function iniciarSesion(){
 
     let codigoResp;
 
-  
-    console.log(JSON.stringify(datos));
+    console.log("Usuario: "+ inputUsuario.value);
+    console.log("Contraseña: "+ inputContra.value);
     console.log("iniciando sesion... ");
     // Petición HTTP
     try{   
@@ -91,8 +91,8 @@ async function iniciarSesion(){
             
             method: 'POST', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTE
             headers: {   //aca decimos que devuelve un JSON
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Accept': '*/*',
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({    // ACA VAN LOS DATOS
                 'usuario': inputUsuario.value,
@@ -105,9 +105,8 @@ async function iniciarSesion(){
 
             //recargamos la pagina
             if(codigoResp >= 200 && codigoResp < 300){
-            alert("Usuario registrado correctamente");
-            console.log("Recargando pagina...")
-            location.reload();
+            alert("inicio_sesion");
+            
             }
         });
     }
