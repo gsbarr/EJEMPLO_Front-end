@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar noticias</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilo_noticias.css">
+</head>
+<body>
+    
+<div class="container">
+    <h1>Iniciar sesión</h1>
+    <h4></h4>
+
+    <div class="row">
+        <form class="col s12 formu_creacion">
+          <div class="row">
+            <div class="input-field col s10">
+              <input placeholder="Usuario" id="usuario" type="text" >
+              <label for="Usuario">Usuario</label>
+            </div>
+          </div>
+            <div class="row">
+                <div class="input-field col s12">
+                  <input placeholder="Contraseña" id="contraseña" type="text" class="validate">
+                  <label for="Contraseña">Contraseña</label>
+                </div>
+              </div>
+
+          <div class="input-field">
+            <a class="waves-effect waves-light btn" onclick="iniciarSesion()"><i class="material-icons left">cloud_upload</i>
+            Iniciar sesión</a>
+          
+          </div>
+          <br>
+        </form>
+      </div>
+
+</div>
+
+    <script src="js/Usuario.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

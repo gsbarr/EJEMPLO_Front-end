@@ -75,3 +75,45 @@ function eliminarUser(){
     
     
 }
+
+async function iniciarSesion(){
+    inputUsuario = document.querySelector("#usuario");
+    inputContra = document.querySelector("#contraseña");
+
+    let codigoResp;
+
+  
+    console.log(JSON.stringify(datos));
+    console.log("iniciando sesion... ");
+    // Petición HTTP
+    try{   
+        respuesta = fetch('http://localhost:3000/usuario/iniciar_sesion', {  // REEMPLAZAR ACA POR LA RUTA CORRESPONDIENTE
+            
+            method: 'POST', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTE
+            headers: {   //aca decimos que devuelve un JSON
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: new URLSearchParams({    // ACA VAN LOS DATOS
+                'usuario': inputUsuario.value,
+                'password': inputContra.value
+              })   
+        })
+        .then(response => {
+            codigoResp = response.status;
+            console.log("Respuesta de petición: "+response.status);
+
+            //recargamos la pagina
+            if(codigoResp >= 200 && codigoResp < 300){
+            alert("Usuario registrado correctamente");
+            console.log("Recargando pagina...")
+            location.reload();
+            }
+        });
+    }
+    catch (error){
+        //hubo un error
+        console.log("Error en registro: " + error);
+    }
+
+}
