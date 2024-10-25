@@ -92,12 +92,15 @@ async function iniciarSesion(){
             method: 'POST', //metodo HTTP -- REEMPLAZAR POR EL METODO CORRESPONDIENTE
             headers: {   //aca decimos que devuelve un JSON
                 'Accept': '*/*',
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Access-Control-Allow-Credentials': true
             },
+            mode: "no-cors",
+            credentials: 'include' ,
             body: new URLSearchParams({    // ACA VAN LOS DATOS
                 'usuario': inputUsuario.value,
                 'password': inputContra.value
-              })   
+              }), 
         })
         .then(response => {
             codigoResp = response.status;
