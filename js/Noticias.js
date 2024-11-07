@@ -7,7 +7,10 @@ async function listar_noticias(){
             headers: {
                 'Accept': 'application/json',
                 "Content-Type": "application/json",
-            }
+                'Access-Control-Allow-Credentials': true
+            },
+            credentials: 'include',
+            mode: 'no-cors' 
         });
     
     
