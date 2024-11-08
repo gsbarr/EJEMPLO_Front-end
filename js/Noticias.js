@@ -1,5 +1,7 @@
 async function listar_noticias(){
 
+    console.log(document.cookie);
+    //alert(document.cookie);
 
     const respuesta = await fetch("http://localhost:3000/noticias/listar"
         , {
@@ -7,21 +9,18 @@ async function listar_noticias(){
             headers: {
                 'Accept': 'application/json',
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true 
             },
             credentials: 'include',
             mode: 'no-cors' 
         });
     
-    
-    datos = await respuesta.json(); 
-    
-    
-    //datos = `[{"_id":"667ca5e2cb1799a0fe91c011","titulo":"se contrató a un canguro como secretario","subtitulo":"es muy bueno en su trabajo","texto":"En el día de ayer hubo una lciitación en la cual concursaron un canguro, un tigre y un elefante. Casi gana el elefante pero se olvidó un colmillo en su casa.","fechahora":"24/07/26 17:55hs"},{"_id":"667cacbe48071f1a90ce56e0","titulo":"se contrató a un canguro como secretario","subtitulo":"es muy bueno en su trabajo","texto":"En el día de ayer hubo una lciitación en la cual concursaron un canguro, un tigre y un elefante. Casi gana el elefante pero se olvidó un colmillo en su casa.","fechahora":"24/07/26 17:55hs"},{"_id":"667cacc248071f1a90ce56e1","titulo":"se contrató a un canguro como secretario","subtitulo":"es muy bueno en su trabajo","texto":"En el día de ayer hubo una lciitación en la cual concursaron un canguro, un tigre y un elefante. Casi gana el elefante pero se olvidó un colmillo en su casa.","fechahora":"24/07/26 17:55hs"},{"_id":"66b16159134105ec643de902","titulo":"hola","texto":"asdsada"}]`;
-
-    console.log(datos);
+    console.log(respuesta.status);
 
     if (respuesta.status >= 200 && respuesta.status < 300){
+        datos = await respuesta.json(); 
+        console.log(datos);
+
         datos.forEach(noti => {
 
             nuevaNoticia = `<div class="row">
