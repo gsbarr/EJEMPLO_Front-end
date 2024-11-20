@@ -17,7 +17,7 @@ async function listar_noticias(){
     
     console.log(respuesta.status);
 
-    if (respuesta.status >= 200 && respuesta.status < 300){
+    try{
         datos = await respuesta.json(); 
         console.log(datos);
 
@@ -40,7 +40,7 @@ async function listar_noticias(){
     
         });
     }
-    else{
+    catch(err) {
         console.log("código de respuesta: " + respuesta.status);
 
         div =  `<div class="row">
