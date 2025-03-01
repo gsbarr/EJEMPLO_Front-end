@@ -33,26 +33,10 @@
 
           <div class="input-field">
             <a class="waves-effect waves-light btn" onclick="iniciarSesion()"><i class="material-icons left">cloud_upload</i>
-            Iniciar sesiónasdas</a>
+            Iniciar sesión</a>
           
           </div>
           <br>
-          
-          <div id="g_id_onload"
-                data-client_id="767201695177-mpk458qll979p5od35jr240v71m4rt42.apps.googleusercontent.com"
-                data-callback="handleCredentialResponse">
-          </div>
-          <div class="g_id_signin"
-          data-type="standard"
-          data-size="large"
-          data-theme="outline"
-          data-text="sign_in_with"
-          data-shape="rectangular"
-          data-logo_alignment="left">
-      </div>
-
-
-
           <button type="button" onclick="datos()">datos de la persona</button>
         </form>
       </div>
@@ -61,32 +45,10 @@
 
     <script src="js/Usuario.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://accounts.google.com/gsi/client" async></script><script>
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <script src="js/GoogleAPI.js"></script>
 
-    function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile();
-      data = profile;
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log('Name: ' + profile.getName());
-      console.log('Image URL: ' + profile.getImageUrl());
-      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    }
-
-    function datos(){
-      
-      var auth2 = gapi.auth2.getAuthInstance();
-      console.log("IMPRIMIENDO DATOS DE USUARIO");
-            if (auth2.isSignedIn.get()) {
-          var profile = auth2.currentUser.get().getBasicProfile();
-          console.log('ID: ' + profile.getId());
-          console.log('Full Name: ' + profile.getName());
-          console.log('Given Name: ' + profile.getGivenName());
-          console.log('Family Name: ' + profile.getFamilyName());
-          console.log('Image URL: ' + profile.getImageUrl());
-          console.log('Email: ' + profile.getEmail());
-        }
-    }
-
-  </script>
 </body>
 </html>
